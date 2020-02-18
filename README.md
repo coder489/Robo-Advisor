@@ -23,3 +23,6 @@ From within the virtual environment, demonstrate your ability to run the Python 
 ```sh
 python app/robo_advisor.py
 ```
+
+##Functionality Requirements
+Obtain an API Key: https://www.alphavantage.co/documentation/

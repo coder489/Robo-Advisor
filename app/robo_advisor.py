@@ -1,5 +1,52 @@
 # app/robo_advisor.py
 
+import requests
+import json
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+API_KEY = os.environ.get("ALPHAVANTAGE_API_KEY", default = "OOPS")
+
+symbol = "TSLA"
+
+request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&apikey={API_KEY}"
+print("URL:", request_url)
+
+response = requests.get(request_url)
+print(type(response))
+print(response.status_code)
+print(type(response.text)) #> str
+
+
+parsed_response = json.loads(response.text)
+print(type(parsed_response)) #> dict
+
+print(parsed_response)
+
+breakpoint()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 print("-------------------------")
 print("SELECTED SYMBOL: XYZ")
 print("-------------------------")
