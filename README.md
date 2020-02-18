@@ -24,7 +24,8 @@ From within the virtual environment, demonstrate your ability to run the Python 
 python app/robo_advisor.py
 ```
 
-##Functionality Requirements
+## Functionality Requirements
+
 Visit https://www.alphavantage.co/support/#api-key to obtain an API Key
 Create a new file in this repo called .env
 
