@@ -25,4 +25,12 @@ python app/robo_advisor.py
 ```
 
 ##Functionality Requirements
-Obtain an API Key: https://www.alphavantage.co/documentation/
+Visit https://www.alphavantage.co/support/#api-key to obtain an API Key
+Create a new file in this repo called .env
+
+Place the following in your .env file
+
+```sh
+ALPHAVANTAGE_API_KEY = "_____________"
+```
+

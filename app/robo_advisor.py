@@ -19,7 +19,6 @@ print(type(response))
 print(response.status_code)
 print(type(response.text)) #> str
 
-
 parsed_response = json.loads(response.text)
 print(type(parsed_response)) #> dict
 
