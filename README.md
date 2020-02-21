@@ -3,6 +3,13 @@
 Link to Project Description
 https://github.com/prof-rossetti/intro-to-python/blob/master/projects/robo-advisor/README.md
 
+Summary: Issues requests to the AlphaVantage Stock Market API in order to provide automated stock or cryptocurrency trading reccomendations.
+
+## Instalation
+
+
+
+
 ## Environment Setup
 
 Create and activate a new Anaconda virtual environment:
@@ -18,7 +25,7 @@ From within the virtual environment, install the required packages specified in 
 pip install -r requirements.txt
 ```
 
-From within the virtual environment, demonstrate your ability to run the Python script from the command-line:
+Then, from within the virtual environment, demonstrate your ability to run the Python script from the command-line:
 
 ```sh
 python app/robo_advisor.py
@@ -34,4 +41,5 @@ Place the following in your .env file
 ```sh
 ALPHAVANTAGE_API_KEY = "_____________"
 ```
+
 
