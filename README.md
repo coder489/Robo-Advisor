@@ -1,8 +1,5 @@
 # Robo-Advisor
 
-Link to Project Description
-https://github.com/prof-rossetti/intro-to-python/blob/master/projects/robo-advisor/README.md
-
 Summary: Issues requests to the AlphaVantage Stock Market API in order to provide automated stock or cryptocurrency trading reccomendations.
 
 ## Instalation
