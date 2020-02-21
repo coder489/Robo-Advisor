@@ -1,9 +1,15 @@
 # app/robo_advisor.py
 
+##### IMPORTS #####
 import requests
 import json
 import os
 from dotenv import load_dotenv
+import datetime
+import time
+
+
+##### CODE #####
 
 load_dotenv()
 
@@ -21,11 +27,18 @@ response = requests.get(request_url)
 
 parsed_response = json.loads(response.text)
 
+
+### Request At ###
+
+t = time.localtime() #Code from https://www.programiz.com/python-programming/datetime/current-datetime
+current_time = time.strftime("%I:%M %p", t) # code from https://www.programiz.com/python-programming/datetime/current-datetime
+                                           #Time format was edited by me to make it more readable to the user
+
+
+### Latest Day ###
+
 last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
 # print(type(parsed_response)) #> dict
-
-
-
 
 
 ### Information Outputs ###
@@ -34,7 +47,7 @@ print("-------------------------")
 print("SELECTED SYMBOL: XYZ")
 print("-------------------------")
 print("REQUESTING STOCK MARKET DATA...")
-print("REQUEST AT: 2018-02-20 02:00pm")
+print(f"REQUEST AT: {str(datetime.date.today())} {current_time}")
 print("-------------------------")
 print(f"LATEST DAY: {last_refreshed}")
 print("LATEST CLOSE: $100,000.00")
