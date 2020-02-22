@@ -44,7 +44,7 @@ last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
 ### Latest Closing Price ###
 
 def to_usd(my_price):
-    return "${0:,.2f}".format(my_price)
+    return f"${my_price:,.2f}" #https://github.com/prof-rossetti/intro-to-python/blob/master/notes/python/datatypes/numbers.md#formatting-as-currency
 
 latest_closing_price = parsed_response["Time Series (Daily)"]["2020-02-21"]["4. close"]
 
