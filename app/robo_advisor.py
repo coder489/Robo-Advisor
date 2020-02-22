@@ -131,7 +131,7 @@ print(f"RECENT HIGH: {to_usd(float(recent_high))}")
 print(f"RECENT LOW: {to_usd(float(recent_low))}")
 print("-------------------------")
 print(f"RECOMMENDATION {reccomendation}") # to do: provide reccomendation
-print("RECOMMENDATION REASON: TODO")
+print("RECOMMENDATION REASON: The current price is less than 90% the recent highest price")
 print("-------------------------")
 print(f"Writing Data to CSV: {csv_file_path}...")
 print("-------------------------")
