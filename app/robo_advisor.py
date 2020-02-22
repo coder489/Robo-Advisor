@@ -9,13 +9,13 @@ import time
 import requests
 
 
-##### CODE #####
+### Accept User Symbol Input and API Key ##
 
 load_dotenv()
 
 API_KEY = os.environ.get("ALPHAVANTAGE_API_KEY", default = "OOPS")
 
-symbol = "TSLA"
+symbol = input("Please input a ticker symbol:")
 
 request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&apikey={API_KEY}"
 
@@ -92,7 +92,7 @@ with open(csv_file_path, "w") as csv_file: # "w" means "open the file for writin
 ### Information Outputs ###
 
 print("-------------------------")
-print("SELECTED SYMBOL: XYZ") #ToDo : input function
+print("SELECTED SYMBOL:" + symbol) 
 print("-------------------------")
 print("REQUESTING STOCK MARKET DATA...")
 print(f"REQUEST AT: {str(datetime.date.today())} {current_time}")
