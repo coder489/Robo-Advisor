@@ -52,7 +52,7 @@ dates = list(tsd.keys())
 
 latest_day = dates[0] #assumes that the date on top is the latest date, but consider sorting to ensure
 
-latest_closing_price = tsd["latest_day"]["4. close"]
+latest_closing_price = tsd[latest_day]["4. close"]
 
 ### Information Outputs ###
 
