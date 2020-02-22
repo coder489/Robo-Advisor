@@ -12,7 +12,7 @@ import requests
 ### Accept User Symbol Input ###
 
 #while True: 
-#    symbol = input("Please input a company's ticker symbol to collect its recent stock price data:")
+symbol = input("Please input a company's ticker symbol to collect its recent stock price data:")
 #    if symbol.isalpha():   #https://stackoverflow.com/questions/36432954/python-validation-to-ensure-input-only-contains-characters-a-z       
 #        break
 #    if len(symbol) > int(4): #figure out
@@ -91,7 +91,10 @@ recent_low = min(prices)
 
 ### Reccomendation ###
 
-
+if float(latest_close) <  float(.90) * float(recent_high):
+    reccomendation = "Don't Buy"
+else:
+    reccomendation = "Buy"
 
 ### Write Data to CSV ###
 
@@ -117,7 +120,7 @@ with open(csv_file_path, "w") as csv_file: # "w" means "open the file for writin
 ### Information Outputs ###
 
 print("-------------------------")
-print("SELECTED SYMBOL:" + symbol) 
+print(f"SELECTED SYMBOL: {symbol}") 
 print("-------------------------")
 print("REQUESTING STOCK MARKET DATA...")
 print(f"REQUEST AT: {str(datetime.date.today())} {current_time}")
@@ -127,7 +130,7 @@ print(f"LATEST CLOSE: {to_usd(float(latest_close))}")
 print(f"RECENT HIGH: {to_usd(float(recent_high))}")
 print(f"RECENT LOW: {to_usd(float(recent_low))}")
 print("-------------------------")
-print("RECOMMENDATION: BUY!") # to do: provide reccomendation
+print(f"RECOMMENDATION {reccomendation}") # to do: provide reccomendation
 print("RECOMMENDATION REASON: TODO")
 print("-------------------------")
 print(f"Writing Data to CSV: {csv_file_path}...")
