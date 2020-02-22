@@ -11,7 +11,23 @@ import requests
 
 ### Accept User Symbol Input ###
 
-symbol = input("Please input a company's ticker symbol to collect its recent stock price data:")
+#while True: 
+#    symbol = input("Please input a company's ticker symbol to collect its recent stock price data:")
+#    if symbol.isalpha():   #https://stackoverflow.com/questions/36432954/python-validation-to-ensure-input-only-contains-characters-a-z       
+#        break
+#    if len(symbol) > int(4): #figure out
+#        break
+#    print("Oh, expecting a properly-formed stock symbol like 'MSFT'. Please try again.")        
+#    exit()
+
+#while True: 
+#    symbol = input("Please input a company's ticker symbol to collect its recent stock price data:")
+#    if symbol.isalpha():   #https://stackoverflow.com/questions/36432954/python-validation-to-ensure-input-only-contains-characters-a-z       
+#        break
+#    if len(symbol) > 4: #figure out
+#        break
+#    print("Oh, expecting a properly-formed stock symbol like 'MSFT'. Please try again.")        
+#    exit()
 
 
 ### Get API Key, and get information from URL ###
@@ -32,7 +48,8 @@ parsed_response = json.loads(response.text)
 
 #print(parsed_response)
 
-### Request At ###
+
+### Request At Date and Time ###
 
 t = time.localtime() #Code from https://www.programiz.com/python-programming/datetime/current-datetime
 current_time = time.strftime("%I:%M %p", t) # code from https://www.programiz.com/python-programming/datetime/current-datetime
@@ -43,6 +60,7 @@ current_time = time.strftime("%I:%M %p", t) # code from https://www.programiz.co
 
 last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
 # print(type(parsed_response)) #> dict
+
 
 ### Latest Closing Price ###
 
@@ -57,6 +75,7 @@ latest_day = dates[0] #assumes that the date on top is the latest date, but cons
 
 latest_close = tsd[latest_day]["4. close"]
 
+
 ### Recent High and Low ###
 
 prices = []
@@ -68,6 +87,10 @@ for date in dates:
 
 recent_high = max(prices)
 recent_low = min(prices)
+
+
+### Reccomendation ###
+
 
 
 ### Write Data to CSV ###
@@ -90,6 +113,7 @@ with open(csv_file_path, "w") as csv_file: # "w" means "open the file for writin
         })
     
 
+
 ### Information Outputs ###
 
 print("-------------------------")
@@ -106,7 +130,7 @@ print("-------------------------")
 print("RECOMMENDATION: BUY!") # to do: provide reccomendation
 print("RECOMMENDATION REASON: TODO")
 print("-------------------------")
-print(f"Writing Data to CSV: {csv_file_path}...") #todo make more user friendly
+print(f"Writing Data to CSV: {csv_file_path}...")
 print("-------------------------")
 print("HAPPY INVESTING!")
 print("-------------------------")
