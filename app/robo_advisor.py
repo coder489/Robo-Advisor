@@ -27,6 +27,7 @@ response = requests.get(request_url)
 
 parsed_response = json.loads(response.text)
 
+#print(parsed_response)
 
 ### Request At ###
 
@@ -40,6 +41,12 @@ current_time = time.strftime("%I:%M %p", t) # code from https://www.programiz.co
 last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
 # print(type(parsed_response)) #> dict
 
+### Latest Closing Price ###
+
+def to_usd(my_price):
+    return "${0:,.2f}".format(my_price)
+
+latest_closing_price = parsed_response["Time Series (Daily)"]["2020-02-21"]["4. close"]
 
 ### Information Outputs ###
 
@@ -50,42 +57,7 @@ print("REQUESTING STOCK MARKET DATA...")
 print(f"REQUEST AT: {str(datetime.date.today())} {current_time}")
 print("-------------------------")
 print(f"LATEST DAY: {last_refreshed}")
-print("LATEST CLOSE: $100,000.00")
-print("RECENT HIGH: $101,000.00")
-print("RECENT LOW: $99,000.00")
-print("-------------------------")
-print("RECOMMENDATION: BUY!")
-print("RECOMMENDATION REASON: TODO")
-print("-------------------------")
-print("HAPPY INVESTING!")
-print("-------------------------")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-print("-------------------------")
-print("SELECTED SYMBOL: XYZ")
-print("-------------------------")
-print("REQUESTING STOCK MARKET DATA...")
-print("REQUEST AT: 2018-02-20 02:00pm")
-print("-------------------------")
-print("LATEST DAY: 2018-02-20")
-print("LATEST CLOSE: $100,000.00")
+print(f"LATEST CLOSE: {to_usd(float(latest_closing_price))}")
 print("RECENT HIGH: $101,000.00")
 print("RECENT LOW: $99,000.00")
 print("-------------------------")
