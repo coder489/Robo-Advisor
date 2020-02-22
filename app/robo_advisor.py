@@ -45,9 +45,11 @@ response = requests.get(request_url)
 #print(type(response.text)) #> str
 
 parsed_response = json.loads(response.text)
-
 #print(parsed_response)
 
+if response.status_code == 200:
+    print("Sorry, couldn't find any trading data for that stock symbol. Please try again")
+    exit()
 
 ### Request At Date and Time ###
 
