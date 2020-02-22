@@ -9,13 +9,16 @@ import time
 import requests
 
 
-### Accept User Symbol Input and API Key ##
+### Accept User Symbol Input ###
+
+symbol = input("Please input a company's ticker symbol to collect its recent stock price data:")
+
+
+### Get API Key, and get information from URL ###
 
 load_dotenv()
 
 API_KEY = os.environ.get("ALPHAVANTAGE_API_KEY", default = "OOPS")
-
-symbol = input("Please input a company's ticker symbol to collect its recent stock price data:")
 
 request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&apikey={API_KEY}"
 
