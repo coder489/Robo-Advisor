@@ -4,8 +4,15 @@ Summary: Issues requests to the AlphaVantage Stock Market API in order to provid
 
 ## Instalation
 
+Create a new repository and enter its respository name, such as robo-advisor
 
+After creating the remote repo, use GitHub Desktop software or the command-line to download or "clone" it onto your computer. Choose a familiar download location like the Desktop.
 
+Then navigate there from the command line (subsequent commands assume you are running them from the local repository's root directory):
+
+```sh
+cd ~/Desktop/robo-advisor
+```
 
 ## Environment Setup
 
@@ -39,4 +46,10 @@ After obtaining your API key, place the following in your .env file (with your a
 ALPHAVANTAGE_API_KEY = "_____________"
 ```
 
+## Usage
 
+To run the script:
+
+```sh
+python robo_advisor.py
+```

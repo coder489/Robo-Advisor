@@ -11,14 +11,15 @@ import requests
 
 ### Accept User Symbol Input ###
 
-#while True: 
-symbol = input("Please input a company's ticker symbol to collect its recent stock price data:")
-#    if symbol.isalpha():   #https://stackoverflow.com/questions/36432954/python-validation-to-ensure-input-only-contains-characters-a-z       
-#        break
-#    if len(symbol) > int(4): #figure out
-#        break
-#    print("Oh, expecting a properly-formed stock symbol like 'MSFT'. Please try again.")        
-#    exit()
+while True: 
+    symbol = input("Please input a company's ticker symbol to collect its recent stock price data:")
+    if symbol.isalpha():          #https://stackoverflow.com/questions/36432954/python-validation-to-ensure-input-only-contains-characters-a-z
+        print("Oh, expecting a properly-formed stock symbol like 'MSFT'. Please try again.")
+        exit()
+    elif len(symbol) > 4:          
+        print("Oh, expecting a properly-formed stock symbol like 'MSFT'. Please try again.")
+        exit()
+
 
 #while True: 
 #    symbol = input("Please input a company's ticker symbol to collect its recent stock price data:")
@@ -28,7 +29,7 @@ symbol = input("Please input a company's ticker symbol to collect its recent sto
 #        break
 #    print("Oh, expecting a properly-formed stock symbol like 'MSFT'. Please try again.")        
 #    exit()
-
+   
 
 ### Get API Key, and get information from URL ###
 
