@@ -15,7 +15,7 @@ load_dotenv()
 
 API_KEY = os.environ.get("ALPHAVANTAGE_API_KEY", default = "OOPS")
 
-symbol = input("Please input a ticker symbol:")
+symbol = input("Please input a company's ticker symbol to collect its recent stock price data:")
 
 request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&apikey={API_KEY}"
 
@@ -56,17 +56,15 @@ latest_close = tsd[latest_day]["4. close"]
 
 ### Recent High and Low ###
 
-high_prices = []
-low_prices = []
+prices = []
 
 for date in dates:
-    high_price = tsd[date]["2. high"]
-    high_prices.append(float(high_price))
-    low_price = tsd[date]["3. low"]
-    low_prices.append(float(low_price))
+    price = tsd[date]["2. high"]
+    price = tsd[date]["3. low"]
+    prices.append(float(price))
 
-recent_high = max(high_prices)
-recent_low = min(low_prices)
+recent_high = max(prices)
+recent_low = min(prices)
 
 
 ### Write Data to CSV ###
