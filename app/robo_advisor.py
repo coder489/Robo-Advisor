@@ -8,6 +8,8 @@ import time
 
 import requests
 
+import plotly
+import plotly.graph_objs as go
 
 ### Accept User Symbol Input ###
 #### FINISH VALIDATION #####
@@ -84,12 +86,17 @@ recent_high = max(prices)
 recent_low = min(prices)
 
 
-### Reccomendation ###
+### Recommendation ###
 
+reccommendation_reason = ""
 if float(latest_close) <  float(.90) * float(recent_high):
-    reccomendation = "Don't Buy"
+    recommendation = "Buy"
+    recommendation_reason = "The current price is less than 90% the recent highest price, thus the stock is possibly undervalued and you can buy it low then sell it when the price increases again"
 else:
-    reccomendation = "Buy"
+    recommendation = "Don't Buy"
+    recommendation_reason = "The current price is greater than 90% the recent highest price, thus the stock is possibly overvalued, so you should wait to buy the stock until the price decreases."
+
+
 
 ### Write Data to CSV ###
 
@@ -125,10 +132,13 @@ print(f"LATEST CLOSE: {to_usd(float(latest_close))}")
 print(f"RECENT HIGH: {to_usd(float(recent_high))}")
 print(f"RECENT LOW: {to_usd(float(recent_low))}")
 print("-------------------------")
-print(f"RECOMMENDATION {reccomendation}") # to do: provide reccomendation
-print("RECOMMENDATION REASON: The current price is less than 90% the recent highest price")
+print(f"RECOMMENDATION {recommendation}") 
+print(f"RECOMMENDATION REASON: {recommendation_reason}")
 print("-------------------------")
 print(f"Writing Data to CSV: {csv_file_path}...")
 print("-------------------------")
 print("HAPPY INVESTING!")
 print("-------------------------")
+
+
+### Line Chart ###
