@@ -10,25 +10,15 @@ import requests
 
 
 ### Accept User Symbol Input ###
+#### FINISH VALIDATION #####
 
-while True: 
-    symbol = input("Please input a company's ticker symbol to collect its recent stock price data:")
-    if symbol.isalpha():          #https://stackoverflow.com/questions/36432954/python-validation-to-ensure-input-only-contains-characters-a-z
-        print("Oh, expecting a properly-formed stock symbol like 'MSFT'. Please try again.")
-        exit()
-    elif len(symbol) > 4:          
-        print("Oh, expecting a properly-formed stock symbol like 'MSFT'. Please try again.")
-        exit()
-
-
-#while True: 
-#    symbol = input("Please input a company's ticker symbol to collect its recent stock price data:")
-#    if symbol.isalpha():   #https://stackoverflow.com/questions/36432954/python-validation-to-ensure-input-only-contains-characters-a-z       
-#        break
-#    if len(symbol) > 4: #figure out
-#        break
-#    print("Oh, expecting a properly-formed stock symbol like 'MSFT'. Please try again.")        
-#    exit()
+symbol = input("Please input a company's ticker symbol to collect its recent stock price data:")
+if not symbol.isalpha():   #https://stackoverflow.com/questions/36432954/python-validation-to-ensure-input-only-contains-characters-a-z       
+    print("Oh, expecting a properly-formed stock symbol like 'MSFT'. Please try again.")        
+    exit()
+elif len(symbol) > 4: 
+    print("Oh, expecting a properly-formed stock symbol like 'MSFT'. Please try again.")    
+    exit()    
    
 
 ### Get API Key, and get information from URL ###
@@ -46,9 +36,9 @@ response = requests.get(request_url)
 #print(type(response.text)) #> str
 
 parsed_response = json.loads(response.text)
-#print(parsed_response)
+print(parsed_response)
 
-if response.status_code == 200:
+if error in parsed_response:
     print("Sorry, couldn't find any trading data for that stock symbol. Please try again")
     exit()
 
