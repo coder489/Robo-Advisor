@@ -35,13 +35,15 @@ response = requests.get(request_url)
 #print(response.status_code) #> 200
 #print(type(response.text)) #> str
 
-parsed_response = json.loads(response.text)
+parsed_response = response.text
 print(parsed_response)
+print(type(parsed_response))
 
-if symbol not in ________:
+if "Error" in parsed_response:
     print("Sorry, couldn't find any trading data for that stock symbol. Please try again")
     exit()
 
+parsed_response = json.loads(response.text)
 ### Request At Date and Time ###
 
 t = time.localtime() #Code from https://www.programiz.com/python-programming/datetime/current-datetime
