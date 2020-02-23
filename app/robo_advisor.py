@@ -38,7 +38,7 @@ response = requests.get(request_url)
 parsed_response = json.loads(response.text)
 print(parsed_response)
 
-if error in parsed_response:
+if symbol not in ________:
     print("Sorry, couldn't find any trading data for that stock symbol. Please try again")
     exit()
 
