@@ -37,15 +37,16 @@ response = requests.get(request_url)
 #print(response.status_code) #> 200
 #print(type(response.text)) #> str
 
-parsed_response = response.text
-print(parsed_response)
-print(type(parsed_response))
+response_receipt = response.text
+#print(parsed_response)
+#print(type(parsed_response))
 
-if "Error" in parsed_response:
+if "Error" in response_receipt:
     print("Sorry, couldn't find any trading data for that stock symbol. Please try again")
     exit()
 
 parsed_response = json.loads(response.text)
+
 ### Request At Date and Time ###
 
 t = time.localtime() #Code from https://www.programiz.com/python-programming/datetime/current-datetime
@@ -94,7 +95,7 @@ if float(latest_close) <  float(.90) * float(recent_high):
     recommendation_reason = "The current price is less than 90% the recent highest price, thus the stock is possibly undervalued and you can buy it low then sell it when the price increases again"
 else:
     recommendation = "Don't Buy"
-    recommendation_reason = "The current price is greater than 90% the recent highest price, thus the stock is possibly overvalued, so you should wait to buy the stock until the price decreases."
+    recommendation_reason = "The current price is greater than 90% the recent highest price, thus the stock price is one of the higher prices, so you should wait to buy the stock until the price decreases."
 
 
 
@@ -142,3 +143,41 @@ print("-------------------------")
 
 
 ### Line Chart ###
+
+## Attempt 2
+#line_data = list(tsd.keys())
+#
+#date_list = [x[0] for x in line_data]
+#
+#high_price = [y["2. high"] for y in line_data]
+#
+#plotly.offline.plot({
+#    "data_1": [go.Scatter(x=date_list, y=high_price)],
+##    "data_2": [go.Scatter(x=date_list, y=low_price)],
+##    "data_3": [go.Scatter(x=date_list, y=close_price)]
+#    "layout": go.Layout(title="hello world")
+#}, auto_open=True)
+
+
+## Attempt 1
+#dict((k, int(v)) for k, v in parsed_response.iteritems()) #https://stackoverflow.com/questions/9224385/in-dictionary-converting-the-value-from-string-to-integer
+
+line_data = parsed_response
+
+date_list = [x[0] for x in parsed_response]   #### place in requirements and readme
+
+high_price = [y["2. high"] for y in parsed_response]
+low_price = [y["3. low"] for y in parsed_response]
+close_price = [y["4. close"] for y in parsed_response]
+
+plotly.offline.plot({
+    "data_1": [go.Scatter(x=date_list, y=high_price)],
+ #   "data_2": [go.Scatter(x=date_list, y=low_price)],
+  #  "data_3": [go.Scatter(x=date_list, y=close_price)]
+     "layout": go.Layout(title="hello world")
+}, auto_open=True)
+    
+
+
+
+
