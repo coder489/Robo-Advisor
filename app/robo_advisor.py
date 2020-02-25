@@ -92,10 +92,10 @@ recent_low = min(prices)
 reccommendation_reason = ""
 if float(latest_close) <  float(.90) * float(recent_high):
     recommendation = "Buy"
-    recommendation_reason = "The current price is less than 90% the recent highest price, thus the stock is possibly undervalued and you can buy it low then sell it when the price increases again"
+    recommendation_reason = "The current price is less than 90% of the recent highest price, thus the stock is possibly undervalued and you can buy it low then sell it when the price increases again"
 else:
     recommendation = "Don't Buy"
-    recommendation_reason = "The current price is greater than 90% the recent highest price, so you should wait to buy the stock until the price decreases."
+    recommendation_reason = "The current price is greater than 90% of the recent highest price, so you should wait to buy the stock until the price decreases."
 
 
 
@@ -123,7 +123,7 @@ with open(csv_file_path, "w") as csv_file: # "w" means "open the file for writin
 ### Information Outputs ###
 
 print("-------------------------")
-print(f"SELECTED SYMBOL: {symbol}") 
+print(f"SELECTED SYMBOL: {symbol.upper()}") 
 print("-------------------------")
 print("REQUESTING STOCK MARKET DATA...")
 print(f"REQUEST AT: {str(datetime.date.today())} {current_time}")
@@ -133,13 +133,14 @@ print(f"LATEST CLOSE: {to_usd(float(latest_close))}")
 print(f"RECENT HIGH: {to_usd(float(recent_high))}")
 print(f"RECENT LOW: {to_usd(float(recent_low))}")
 print("-------------------------")
-print(f"RECOMMENDATION {recommendation}") 
+print(f"RECOMMENDATION: {recommendation}") 
 print(f"RECOMMENDATION REASON: {recommendation_reason}")
 print("-------------------------")
 print("Writing Data to CSV...")
-print(f"You may now access the CSV via this file path: {csv_file_path}...")
+print(f"You may now access the CSV via this file path: {csv_file_path}")
 print("-------------------------")
-print("A visualization of the stock close prices over time can be seen in your browser")
+print("A visualization of the stock close prices over time can be seen in your browser.")
+print("-------------------------")
 print("HAPPY INVESTING!")
 print("-------------------------")
 
