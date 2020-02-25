@@ -192,15 +192,11 @@ plotly.offline.plot({
 #close_price = []
 #
 #for x in parsed_response["Time Series (Daily)"].values():
-#    high_price.append(x["2. high"])
-#    low_price.append(x["3. low"])
 #    close_price.append(x["4. close"])
 #
 #
 #plotly.offline.plot({
-#    "data": [go.Scatter(x=date_list, y=high_price)],
-###    "data_2": [go.Scatter(x=date_list, y=low_price)],
-###    "data_3": [go.Scatter(x=date_list, y=close_price)]
+#    "data_3": [go.Scatter(x=date_list, y=close_price)]
 #    "layout": go.Layout(title="hello world")
 #}, auto_open=True)
 
@@ -210,13 +206,11 @@ plotly.offline.plot({
 #
 #date_list = [x[0] for x in line_data]
 #
-#high_price = [y["2. high"] for y in line_data]
+#close_price = [y["4. close"] for y in line_data]
 #
 #plotly.offline.plot({
-#    "data_1": [go.Scatter(x=date_list, y=high_price)],
-##    "data_2": [go.Scatter(x=date_list, y=low_price)],
 ##    "data_3": [go.Scatter(x=date_list, y=close_price)]
-#    "layout": go.Layout(title="hello world")
+#    "layout": go.Layout(title="Stock Price Over Time")
 #}, auto_open=True)
 
 
@@ -229,16 +223,12 @@ plotly.offline.plot({
 #
 #line_data = parsed_response
 #
-#date_list = [x[0] for x in parsed_response]   #### place in requirements and readme
+#date_list = [x[0] for x in parsed_response] 
 #
-#high_price = [y["2. high"] for y in parsed_response]
-#low_price = [y["3. low"] for y in parsed_response]
 #close_price = [y["4. close"] for y in parsed_response]
 #
 #plotly.offline.plot({
-#    "data_1": [go.Scatter(x=date_list, y=high_price)],
-# #   "data_2": [go.Scatter(x=date_list, y=low_price)],
-#  #  "data_3": [go.Scatter(x=date_list, y=close_price)]
+#     "data_3": [go.Scatter(x=date_list, y=close_price)]
 #     "layout": go.Layout(title="hello world")
 #}, auto_open=True)
 
