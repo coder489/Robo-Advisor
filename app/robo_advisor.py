@@ -95,7 +95,7 @@ if float(latest_close) <  float(.90) * float(recent_high):
     recommendation_reason = "The current price is less than 90% the recent highest price, thus the stock is possibly undervalued and you can buy it low then sell it when the price increases again"
 else:
     recommendation = "Don't Buy"
-    recommendation_reason = "The current price is greater than 90% the recent highest price, thus the stock price is one of the higher prices, so you should wait to buy the stock until the price decreases."
+    recommendation_reason = "The current price is greater than 90% the recent highest price, so you should wait to buy the stock until the price decreases."
 
 
 
@@ -144,12 +144,23 @@ print("-------------------------")
 
 ### Line Chart ###
 
-layout = go.Layout(                       #https://plot.ly/python/v3/tick-formatting/
-    title= ("Close Price of " + symbol.upper() + " Stock Over Time"),
+
+layout = go.Layout(                     #https://plot.ly/python/v3/tick-formatting/
+    title=("Close Price of " + symbol.upper() + " Stock Over Time"),
     yaxis = go.layout.YAxis(
-        tickformat = "$"
+        tickformat="$",
+        title=go.layout.yaxis.Title(      #https://plot.ly/python/v3/figure-labels/
+            text=("Close Price of Stock (in dollars)")
+        )
+    ),
+    xaxis = go.layout.XAxis(
+        title= go.layout.xaxis.Title(        
+            text=("Trading Day")
+        )
     )
 )
+
+
 
 line_data = []
 
@@ -162,7 +173,7 @@ price_list = [y["close_price"] for y in line_data]
 
 plotly.offline.plot({
     "data": [go.Scatter(x = date_list, y = price_list)],
-    "layout": go.Layout(title="Close Price of " + symbol.upper() + " Stock Over Time")
+    "layout": layout
 }, auto_open=True)
 
 
