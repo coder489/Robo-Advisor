@@ -144,6 +144,12 @@ print("-------------------------")
 
 ### Line Chart ###
 
+layout = go.Layout(                       #https://plot.ly/python/v3/tick-formatting/
+    title= ("Close Price of " + symbol.upper() + " Stock Over Time"),
+    yaxis = go.layout.YAxis(
+        tickformat = "$"
+    )
+)
 
 line_data = []
 
