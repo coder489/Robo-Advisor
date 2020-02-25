@@ -144,6 +144,47 @@ print("-------------------------")
 
 ### Line Chart ###
 
+
+line_data = []
+
+for y in dates:
+    sub_dictionary = {"date": y,"close_price": parsed_response["Time Series (Daily)"][y]["4. close"]}
+    line_data.append(sub_dictionary)
+
+date_list = [x["date"] for x in line_data]         #Code edited from the in class three charts assignment that was an in class assignment that I worked on with Tim Palmieri
+price_list = [y["close_price"] for y in line_data]
+
+plotly.offline.plot({
+    "data": [go.Scatter(x = date_list, y = price_list)],
+    "layout": go.Layout(title="Close Price of " + symbol.upper() + " Stock Over Time")
+}, auto_open=True)
+
+
+
+## Attempt 3
+
+#line_data = parsed_response
+#
+#date_list = [x[0] for x in parsed_response] 
+#
+#high_price = []
+#low_price = []
+#close_price = []
+#
+#for x in parsed_response["Time Series (Daily)"].values():
+#    high_price.append(x["2. high"])
+#    low_price.append(x["3. low"])
+#    close_price.append(x["4. close"])
+#
+#
+#plotly.offline.plot({
+#    "data": [go.Scatter(x=date_list, y=high_price)],
+###    "data_2": [go.Scatter(x=date_list, y=low_price)],
+###    "data_3": [go.Scatter(x=date_list, y=close_price)]
+#    "layout": go.Layout(title="hello world")
+#}, auto_open=True)
+
+
 ## Attempt 2
 #line_data = list(tsd.keys())
 #
@@ -160,23 +201,28 @@ print("-------------------------")
 
 
 ## Attempt 1
-#dict((k, int(v)) for k, v in parsed_response.iteritems()) #https://stackoverflow.com/questions/9224385/in-dictionary-converting-the-value-from-string-to-integer
+#dict(("Time Series (Daily)", int(v)) for k, v in parsed_response.items()) #https://stackoverflow.com/questions/9224385/in-dictionary-converting-the-value-from-string-to-integer
 
-line_data = parsed_response
+#v=[]
+#
+#dict((k, float(v)) for k, v in tsd.items())
+#
+#line_data = parsed_response
+#
+#date_list = [x[0] for x in parsed_response]   #### place in requirements and readme
+#
+#high_price = [y["2. high"] for y in parsed_response]
+#low_price = [y["3. low"] for y in parsed_response]
+#close_price = [y["4. close"] for y in parsed_response]
+#
+#plotly.offline.plot({
+#    "data_1": [go.Scatter(x=date_list, y=high_price)],
+# #   "data_2": [go.Scatter(x=date_list, y=low_price)],
+#  #  "data_3": [go.Scatter(x=date_list, y=close_price)]
+#     "layout": go.Layout(title="hello world")
+#}, auto_open=True)
 
-date_list = [x[0] for x in parsed_response]   #### place in requirements and readme
 
-high_price = [y["2. high"] for y in parsed_response]
-low_price = [y["3. low"] for y in parsed_response]
-close_price = [y["4. close"] for y in parsed_response]
-
-plotly.offline.plot({
-    "data_1": [go.Scatter(x=date_list, y=high_price)],
- #   "data_2": [go.Scatter(x=date_list, y=low_price)],
-  #  "data_3": [go.Scatter(x=date_list, y=close_price)]
-     "layout": go.Layout(title="hello world")
-}, auto_open=True)
-    
 
 
 
