@@ -55,5 +55,5 @@ ALPHAVANTAGE_API_KEY = "_____________"
 To run the script:
 
 ```sh
-python robo_advisor.pyy
+python robo_advisor.py
 ```
