@@ -181,56 +181,6 @@ plotly.offline.plot({
 
 
 
-## Attempt 3
-
-#line_data = parsed_response
-#
-#date_list = [x[0] for x in parsed_response] 
-#
-#high_price = []
-#low_price = []
-#close_price = []
-#
-#for x in parsed_response["Time Series (Daily)"].values():
-#    close_price.append(x["4. close"])
-#
-#
-#plotly.offline.plot({
-#    "data_3": [go.Scatter(x=date_list, y=close_price)]
-#    "layout": go.Layout(title="hello world")
-#}, auto_open=True)
-
-
-## Attempt 2
-#line_data = list(tsd.keys())
-#
-#date_list = [x[0] for x in line_data]
-#
-#close_price = [y["4. close"] for y in line_data]
-#
-#plotly.offline.plot({
-##    "data_3": [go.Scatter(x=date_list, y=close_price)]
-#    "layout": go.Layout(title="Stock Price Over Time")
-#}, auto_open=True)
-
-
-## Attempt 1
-#dict(("Time Series (Daily)", int(v)) for k, v in parsed_response.items()) #https://stackoverflow.com/questions/9224385/in-dictionary-converting-the-value-from-string-to-integer
-
-#v=[]
-#
-#dict((k, float(v)) for k, v in tsd.items())
-#
-#line_data = parsed_response
-#
-#date_list = [x[0] for x in parsed_response] 
-#
-#close_price = [y["4. close"] for y in parsed_response]
-#
-#plotly.offline.plot({
-#     "data_3": [go.Scatter(x=date_list, y=close_price)]
-#     "layout": go.Layout(title="hello world")
-#}, auto_open=True)
 
 
 
