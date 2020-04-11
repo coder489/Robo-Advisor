@@ -3,3 +3,6 @@
 # ignore secret environment variable values
 
 .env
+
+__pycache__
+.pytest_cache
