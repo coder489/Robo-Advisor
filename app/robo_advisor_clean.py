@@ -11,6 +11,38 @@ import requests
 import plotly
 import plotly.graph_objs as go
 
+load_dotenv()
+
+def to_usd(my_price):
+    """
+        Used to format the price in traditional US format. 
+        Source: https://github.com/prof-rossetti/intro-to-python/blob/master/notes/python/datatypes/numbers.md#formatting-as-currency
+    """
+    return f"${my_price:,.2f}" 
+
+def current_time():
+    """
+        Used to get the current time, format it, and then return it.
+        Source: https://www.programiz.com/python-programming/datetime/current-datetime
+    """
+    t = time.localtime()                
+    time_now = time.strftime("%I:%M %p", t) 
+    return time_now
+
+def line():
+    """
+    Used to print the line for the receipt.
+    """
+    print("---------------------------------")
+
+def recommendation_reason():
+    recommendation = ""
+    if float(latest_close) <  float(.90) * float(recent_high):
+        recommendation = "Buy, because the current price is less than 90% of the recent highest price, thus the stock is possibly undervalued and you can buy it low then sell it when the price increases again"
+    else:
+        recommendation = "Don't buy, because the current price is greater than 90% of the recent highest price, so you should wait to buy the stock until the price decreases."
+    print(recommendation)
+
 ### Accept User Symbol Input ###
 #### FINISH VALIDATION #####
 
@@ -22,24 +54,14 @@ elif len(symbol) > 4:
     print("Oh, expecting a properly-formed stock symbol like 'MSFT'. Please try again.")    
     exit()    
    
-
-### Get API Key, and get information from URL ###
-
-load_dotenv()
-
 API_KEY = os.environ.get("ALPHAVANTAGE_API_KEY", default = "OOPS")
 
 request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&apikey={API_KEY}"
 
-
 response = requests.get(request_url)
-#print(type(response)) #> response
-#print(response.status_code) #> 200
-#print(type(response.text)) #> str
 
 response_receipt = response.text
-#print(parsed_response)
-#print(type(parsed_response))
+
 
 if "Error" in response_receipt:
     print("Sorry, couldn't find any trading data for that stock symbol. Please try again")
@@ -47,23 +69,12 @@ if "Error" in response_receipt:
 
 parsed_response = json.loads(response.text)
 
-### Request At Date and Time ###
-
-t = time.localtime() #Code from https://www.programiz.com/python-programming/datetime/current-datetime
-current_time = time.strftime("%I:%M %p", t) # code from https://www.programiz.com/python-programming/datetime/current-datetime
-                                           #Time format was edited by me to make it more readable to the user
-
-
 ### Latest Day ###
 
 last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
-# print(type(parsed_response)) #> dict
 
 
 ### Latest Closing Price ###
-
-def to_usd(my_price):
-    return f"${my_price:,.2f}" #https://github.com/prof-rossetti/intro-to-python/blob/master/notes/python/datatypes/numbers.md#formatting-as-currency
 
 tsd = parsed_response["Time Series (Daily)"]
 
@@ -87,19 +98,7 @@ recent_high = max(prices)
 recent_low = min(prices)
 
 
-### Recommendation ###
-
-reccommendation_reason = ""
-if float(latest_close) <  float(.90) * float(recent_high):
-    recommendation = "Buy"
-    recommendation_reason = "The current price is less than 90% of the recent highest price, thus the stock is possibly undervalued and you can buy it low then sell it when the price increases again"
-else:
-    recommendation = "Don't Buy"
-    recommendation_reason = "The current price is greater than 90% of the recent highest price, so you should wait to buy the stock until the price decreases."
-
-
-
-### Write Data to CSV ###
+## WRITE DATE TO CSV FILE
 
 csv_file_path = os.path.join(os.path.dirname(__file__), "..", "data", "prices.csv")
 csv_headers = ["timestamp", "open", "high", "low", "close", "volume"]
@@ -119,34 +118,32 @@ with open(csv_file_path, "w") as csv_file: # "w" means "open the file for writin
         })
     
 
+## INFORMATION OUTPUTS
 
-### Information Outputs ###
-
-print("-------------------------")
+line()
 print(f"SELECTED SYMBOL: {symbol.upper()}") 
-print("-------------------------")
+line()
 print("REQUESTING STOCK MARKET DATA...")
-print(f"REQUEST AT: {str(datetime.date.today())} {current_time}")
-print("-------------------------")
+print(f"REQUEST AT: {str(datetime.date.today())} {current_time()}")
+line()
 print(f"LATEST DAY: {last_refreshed}")
 print(f"LATEST CLOSE: {to_usd(float(latest_close))}")
 print(f"RECENT HIGH: {to_usd(float(recent_high))}")
 print(f"RECENT LOW: {to_usd(float(recent_low))}")
-print("-------------------------")
-print(f"RECOMMENDATION: {recommendation}") 
-print(f"RECOMMENDATION REASON: {recommendation_reason}")
-print("-------------------------")
+line()
+print("RECOMMENDATION: ") 
+recommendation_reason()
+line()
 print("Writing Data to CSV...")
 print(f"You may now access the CSV via this file path: {csv_file_path}")
-print("-------------------------")
+line()
 print("A visualization of the stock close prices over time can be seen in your browser.")
-print("-------------------------")
+line()
 print("HAPPY INVESTING!")
-print("-------------------------")
+line()
 
 
-## Line Chart
-
+## VISUALIZATION OUTPUT
 
 layout = go.Layout(                     #https://plot.ly/python/v3/tick-formatting/
     title=("Close Price of " + symbol.upper() + " Stock Over Time"),
