@@ -72,7 +72,7 @@ if __name__ == "__main__":
 
     API_KEY = os.environ.get("ALPHAVANTAGE_API_KEY", default = "OOPS")
 
-    request_url = url(symbol, API_KEY)
+    request_url = url_gathering(symbol, API_KEY)
 
     response = requests.get(request_url)
 
