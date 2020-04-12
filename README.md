@@ -57,3 +57,17 @@ To run the script:
 ```sh
 python robo_advisor.py
 ```
+
+## Testing
+
+From inside the virtual environment that was created, use the following code to install testing capabilities
+
+```
+pip install pytest
+```
+
+Use the following code to run the tests:
+
+```
+pytest
+```

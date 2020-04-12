@@ -35,7 +35,7 @@ def line():
     """
     print("---------------------------------")
 
-def url(company, api):
+def url_gathering(company, api):
     """
     Used to collect user given information and input it into alphavantage url to request data
     """
