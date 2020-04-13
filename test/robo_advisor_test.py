@@ -11,10 +11,27 @@ import requests
 import plotly
 import plotly.graph_objs as go
 import pytest
+import json
 
 load_dotenv()
 
 from app.robo_advisor import to_usd, recommendation_reason, get_response
+
+with open('data.txt') as json_file:
+    data = json.load(json_file)
+    for p in data['people']: #use os to get the filepath for the json file and make that a variable, replace data.txt with the json file path
+        print('Name: ' + p['name'])
+        print('Website: ' + p['website'])
+        print('From: ' + p['from'])
+        print('')
+
+gradebook_filepath = "path/to/gradebook.json"
+with open(gradebook_filepath, "r") as json_file:
+    file_contents = json_file.read()
+gradebook = json.loads(file_contents)
+print(type(gradebook)) #> <class 'dict'>
+print(gradebook)
+
 
 def test_to_usd():
     result = to_usd(82.9)
@@ -22,9 +39,9 @@ def test_to_usd():
 
 
 def test_recommendation_reason():
+    stock_info = json.loads(prices_daily.json)
     result = recommendation_reason(float(10), float(5))
     assert result == "Don't buy, because the current price is greater than 90% of the recent highest price, so you should wait to buy the stock until the price decreases."
-
 
 CI_ENV = os.environ.get("CI") == "true"
 
@@ -36,5 +53,5 @@ def test_get_response():
 
     assert isinstance(parsed_response, dict)
     assert parsed_response["Meta Data"]["2. Symbol"] == symbol
-#Source: https://github.com/prof-rossetti/intro-to-python/blob/master/notes/devtools/travis-ci.md
+#Source: Adapted from https://github.com/prof-rossetti/intro-to-python/blob/master/notes/devtools/travis-ci.md
 

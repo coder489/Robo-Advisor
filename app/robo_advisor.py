@@ -16,6 +16,7 @@ load_dotenv()
 def to_usd(my_price):
     """
         Used to format the price in traditional US format. 
+        
         Source: https://github.com/prof-rossetti/intro-to-python/blob/master/notes/python/datatypes/numbers.md#formatting-as-currency
     """
     return f"${my_price:,.2f}" 
@@ -23,6 +24,7 @@ def to_usd(my_price):
 def current_time():
     """
         Used to get the current time, format it, and then return it.
+        
         Source: https://www.programiz.com/python-programming/datetime/current-datetime
     """
     t = time.localtime()                
@@ -38,7 +40,8 @@ def line():
 def get_response(stock_symbol, api):
     """
     Used to collect the data from the url.
-    Source: https://github.com/prof-rossetti/intro-to-python/blob/master/notes/devtools/travis-ci.md
+    
+    Source: Adapted from https://github.com/prof-rossetti/intro-to-python/blob/master/notes/devtools/travis-ci.md
     """
     url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={stock_symbol}&apikey={api}"
     response = requests.get(url) # issues an HTTP request
@@ -58,6 +61,25 @@ def recommendation_reason(latest_close, recent_high):
     else:
         recommendation = "Don't buy, because the current price is greater than 90% of the recent highest price, so you should wait to buy the stock until the price decreases."
     return recommendation
+
+def write_to_csv(csv_filepath):
+
+    csv_headers = ["timestamp", "open", "high", "low", "close", "volume"]
+
+    with open(csv_filepath, "w") as csv_file:
+        writer = csv.DictWriter(csv_file, fieldnames=csv_headers)
+        writer.writeheader() 
+        for date in dates:
+            daily_prices = tsd[date]
+            writer.writerow({
+                "timestamp": date,
+                "open": daily_prices["1. open"],
+                "high": daily_prices["2. high"],
+                "low": daily_prices["3. low"],
+                "close": daily_prices["4. close"],
+                "volume": daily_prices["5. volume"]
+            })
+    return True
 
 if __name__ == "__main__":
     
@@ -82,7 +104,7 @@ if __name__ == "__main__":
 
    
     # COLLECT THE LATEST DAY AND LATEST CLOSING PRICE
-
+    
     last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
 
     tsd = parsed_response["Time Series (Daily)"]
@@ -108,25 +130,30 @@ if __name__ == "__main__":
 
     ### INFORMATION OUTPUTS ###
 
-    # WRITE DATE TO CSV FILE
+    # WRITE DATA TO CSV FILE
+
+    write_to_csv(os.path.join(os.path.dirname(__file__), "..", "data", "prices.csv"))
 
     csv_file_path = os.path.join(os.path.dirname(__file__), "..", "data", "prices.csv")
-    csv_headers = ["timestamp", "open", "high", "low", "close", "volume"]
 
-    with open(csv_file_path, "w") as csv_file: # "w" means "open the file for writing"
-        writer = csv.DictWriter(csv_file, fieldnames = csv_headers)
-        writer.writeheader() 
-        for date in dates:
-            daily_prices = tsd[date]        
-            writer.writerow({
-                "timestamp": date,
-                "open": daily_prices["1. open"],
-                "high": daily_prices["2. high"],
-                "low": daily_prices["3. low"],
-                "close": daily_prices["4. close"],
-                "volume": daily_prices["5. volume"]
-            })
-    
+#def write_to_csv(csv_filepath):
+#    
+#    csv_headers = ["timestamp", "open", "high", "low", "close", "volume"]
+#
+#    with open(csv_file_path, "w") as csv_file: # "w" means "open the file for writing"
+#        writer = csv.DictWriter(csv_file, fieldnames = csv_headers)
+#        writer.writeheader() 
+#        for date in dates:
+#            daily_prices = tsd[date]        
+#            writer.writerow({
+#                "timestamp": date,
+#                "open": daily_prices["1. open"],
+#                "high": daily_prices["2. high"],
+#                "low": daily_prices["3. low"],
+#                "close": daily_prices["4. close"],
+#                "volume": daily_prices["5. volume"]
+#            })
+#    
 
     ## INFORMATION GIVEN IMMEDIATELY TO USER
 
