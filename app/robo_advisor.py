@@ -35,23 +35,29 @@ def line():
     """
     print("---------------------------------")
 
-def url(company, api):
+def get_response(stock_symbol, api):
     """
-    Used to collect user given information and input it into alphavantage url to request data
+    Used to collect the data from the url.
+    Source: https://github.com/prof-rossetti/intro-to-python/blob/master/notes/devtools/travis-ci.md
     """
-    request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={company}&apikey={api}"
-    return request_url
+    url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={stock_symbol}&apikey={api}"
+    response = requests.get(url) # issues an HTTP request
+    good_response = response.text
+    if "Error" in good_response:
+        print("Sorry, couldn't find any trading data for that stock symbol. Please try again")
+        exit()
+    else:
+        return json.loads(response.text)
 
-def recommendation_reason():
+def recommendation_reason(latest_close, recent_high):
     """
     Used to print the recommendation to the user based on the stock price.
     """
-    recommendation = ""
-    if float(latest_close) <  float(.90) * float(recent_high):
+    if float(latest_close) < float(0.9) * float(recent_high):
         recommendation = "Buy, because the current price is less than 90% of the recent highest price, thus the stock is possibly undervalued and you can buy it low then sell it when the price increases again"
     else:
         recommendation = "Don't buy, because the current price is greater than 90% of the recent highest price, so you should wait to buy the stock until the price decreases."
-    print(recommendation)
+    return recommendation
 
 if __name__ == "__main__":
     
@@ -72,19 +78,9 @@ if __name__ == "__main__":
 
     API_KEY = os.environ.get("ALPHAVANTAGE_API_KEY", default = "OOPS")
 
-    request_url = url(symbol, API_KEY)
+    parsed_response = get_response(symbol, API_KEY)
 
-    response = requests.get(request_url)
-
-    response_receipt = response.text
-
-    if "Error" in response_receipt:
-        print("Sorry, couldn't find any trading data for that stock symbol. Please try again")
-        exit()
-
-    parsed_response = json.loads(response.text)
-
-
+   
     # COLLECT THE LATEST DAY AND LATEST CLOSING PRICE
 
     last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
@@ -145,7 +141,7 @@ if __name__ == "__main__":
     print(f"RECENT HIGH: {to_usd(float(recent_high))}")
     print(f"RECENT LOW: {to_usd(float(recent_low))}")
     line()
-    print(f"RECOMMENDATION: {recommendation_reason()}") 
+    print(f"RECOMMENDATION: {recommendation_reason(float(latest_close), float(recent_high))}") 
     line()
     print("Writing Data to CSV...")
     print(f"You may now access the CSV via this file path: {csv_file_path}")
