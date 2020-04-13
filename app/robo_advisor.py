@@ -42,16 +42,15 @@ def url_gathering(company, api):
     request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={company}&apikey={api}"
     return request_url
 
-def recommendation_reason():
+def recommendation_reason(latest_close, recent_high):
     """
     Used to print the recommendation to the user based on the stock price.
     """
-    recommendation = ""
-    if float(latest_close) <  float(.90) * float(recent_high):
+    if float(latest_close) < float(0.9) * float(recent_high):
         recommendation = "Buy, because the current price is less than 90% of the recent highest price, thus the stock is possibly undervalued and you can buy it low then sell it when the price increases again"
     else:
         recommendation = "Don't buy, because the current price is greater than 90% of the recent highest price, so you should wait to buy the stock until the price decreases."
-    print(recommendation)
+    return recommendation
 
 if __name__ == "__main__":
     
@@ -145,7 +144,7 @@ if __name__ == "__main__":
     print(f"RECENT HIGH: {to_usd(float(recent_high))}")
     print(f"RECENT LOW: {to_usd(float(recent_low))}")
     line()
-    print(f"RECOMMENDATION: {recommendation_reason()}") 
+    print(f"RECOMMENDATION: {recommendation_reason(float(latest_close), float(recent_high))}") 
     line()
     print("Writing Data to CSV...")
     print(f"You may now access the CSV via this file path: {csv_file_path}")
