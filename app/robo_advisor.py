@@ -35,12 +35,26 @@ def line():
     """
     print("---------------------------------")
 
-def url_gathering(company, api):
+#def url_gathering(company, api):
+#    """
+#    Used to collect user given information and input it into alphavantage url to request data
+#    """
+#    request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={company}&apikey={api}"
+#    return request_url
+
+def get_response(stock_symbol, api):
     """
-    Used to collect user given information and input it into alphavantage url to request data
+    Used to collect the data from the url.
+    Source: https://github.com/prof-rossetti/intro-to-python/blob/master/notes/devtools/travis-ci.md
     """
-    request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={company}&apikey={api}"
-    return request_url
+    url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={stock_symbol}&apikey={api}"
+    response = requests.get(url) # issues an HTTP request
+    good_response = response.text
+    if "Error" in good_response:
+        print("Sorry, couldn't find any trading data for that stock symbol. Please try again")
+        exit()
+    else:
+        return json.loads(response.text)
 
 def recommendation_reason(latest_close, recent_high):
     """
@@ -71,19 +85,9 @@ if __name__ == "__main__":
 
     API_KEY = os.environ.get("ALPHAVANTAGE_API_KEY", default = "OOPS")
 
-    request_url = url_gathering(symbol, API_KEY)
+    parsed_response = get_response(symbol, API_KEY)
 
-    response = requests.get(request_url)
-
-    response_receipt = response.text
-
-    if "Error" in response_receipt:
-        print("Sorry, couldn't find any trading data for that stock symbol. Please try again")
-        exit()
-
-    parsed_response = json.loads(response.text)
-
-
+   
     # COLLECT THE LATEST DAY AND LATEST CLOSING PRICE
 
     last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
