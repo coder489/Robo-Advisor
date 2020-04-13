@@ -35,13 +35,6 @@ def line():
     """
     print("---------------------------------")
 
-#def url_gathering(company, api):
-#    """
-#    Used to collect user given information and input it into alphavantage url to request data
-#    """
-#    request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={company}&apikey={api}"
-#    return request_url
-
 def get_response(stock_symbol, api):
     """
     Used to collect the data from the url.
