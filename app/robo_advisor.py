@@ -17,7 +17,9 @@ def to_usd(my_price):
     """
     Converts a numeric value to usd-formatted string, for printing and display purposes.
     
-    Param: my_price (int or float) like 4000.444444
+    Parameters: 
+    
+    my_price (int or float): a price value that is not formatted like 4000.444444
         
     Source: https://github.com/prof-rossetti/intro-to-python/blob/master/notes/python/datatypes/numbers.md#formatting-as-currency
     """
@@ -37,17 +39,22 @@ def line(symbol):
     """
     Creates a divider out of a specified symbol.
     
-    Param: symbol (str) like "*" or "-"
+    Parameters: 
+    
+    symbol (str): any symbol that you wish to use repeatedly to form a divider, like "*" or "-"
 
     """
     return symbol * 50
 
 def get_response(stock_symbol, api):
     """
-    Gets prices of stock from a specified url from alphavantage, validates that the company ticker requested exists, and returns the prices as json.loads.
+    Gets prices of stock from a specified url from alphavantage, validates that the company ticker requested exists, and then returns the requested information as json.loads.
     
-    Param: stock_symbol (str that is 4 characters or less, and only contains letters) like "msft",
-    api (str that is an API key that can be obtained through alphavantage)
+    Parameters: 
+    
+    stock_symbol (str): must be 4 characters or less, and only contains letters, like "msft"
+    
+    api (str): an API key that can be obtained through alphavantage)
 
     Source: Adapted from https://github.com/prof-rossetti/intro-to-python/blob/master/notes/devtools/travis-ci.md
     """
@@ -64,7 +71,11 @@ def recommendation_reason(latest_close, recent_high):
     """
     Prints a recommendation in regards to buying stock based on the most recent high and low stock prices.
 
-    Param: latest_close (float or int) like 456.9980 or 456, recent_high (float or int) like 45.6868 or 45
+    Parameters: 
+    
+    latest_close (float or int): a price value, like 456.9980 or 456 
+    
+    recent_high (float or int): a price value, like 45.6868 or 45
 
     """
     if float(latest_close) < float(0.9) * float(recent_high):
@@ -77,7 +88,13 @@ def writing_csv(csv_filepath, all_dates, stock_price_data):
     """
     Gathers data given, loops through that data, and collects requested information, then writes the information to a csv file at the specified file path.
 
-    Param: csv_filepath (desired filepath), all_dates (list), stock_price_data (dictionary)
+    Parameters: 
+    
+    csv_filepath (str): desired filepath for the csv file
+    
+    all_dates (list): a list of the first element of each dictionary in the looped through dictionary of dictionaries
+    
+    stock_price_data (dictionary): a dictionary of dictionaries where each dictionary is a set of key value pairs unique to a specific date
 
     Source: Adapted from Prof Rosetti's screen cast of Robo Advisor
     """
