@@ -21,7 +21,6 @@ def test_to_usd():
     assert result == "$82.90"
 
 def test_recommendation_reason():
-    stock_info = json.loads(prices_daily.json)
     result = recommendation_reason(float(10), float(5))
     assert result == "Don't buy, because the current price is greater than 90% of the recent highest price, so you should wait to buy the stock until the price decreases."
 
