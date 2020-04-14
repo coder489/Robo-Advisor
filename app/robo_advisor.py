@@ -63,7 +63,11 @@ def recommendation_reason(latest_close, recent_high):
     return recommendation
 
 def write_to_csv(csv_filepath):
+"""
+Used to write the gathered data to a specified csv file.
 
+Source: Adapted from Prof Rosetti's screen cast of Robo Advisor
+"""
     csv_headers = ["timestamp", "open", "high", "low", "close", "volume"]
 
     with open(csv_filepath, "w") as csv_file:
@@ -132,29 +136,11 @@ if __name__ == "__main__":
 
     # WRITE DATA TO CSV FILE
 
-    write_to_csv(os.path.join(os.path.dirname(__file__), "..", "data", "prices.csv"))
-
     csv_file_path = os.path.join(os.path.dirname(__file__), "..", "data", "prices.csv")
 
-#def write_to_csv(csv_filepath):
-#    
-#    csv_headers = ["timestamp", "open", "high", "low", "close", "volume"]
-#
-#    with open(csv_file_path, "w") as csv_file: # "w" means "open the file for writing"
-#        writer = csv.DictWriter(csv_file, fieldnames = csv_headers)
-#        writer.writeheader() 
-#        for date in dates:
-#            daily_prices = tsd[date]        
-#            writer.writerow({
-#                "timestamp": date,
-#                "open": daily_prices["1. open"],
-#                "high": daily_prices["2. high"],
-#                "low": daily_prices["3. low"],
-#                "close": daily_prices["4. close"],
-#                "volume": daily_prices["5. volume"]
-#            })
-#    
+    write_to_csv(os.path.join(os.path.dirname(__file__), "..", "data", "prices.csv"))
 
+   
     ## INFORMATION GIVEN IMMEDIATELY TO USER
 
     line()

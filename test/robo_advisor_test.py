@@ -17,22 +17,6 @@ load_dotenv()
 
 from app.robo_advisor import to_usd, recommendation_reason, get_response
 
-with open('data.txt') as json_file:
-    data = json.load(json_file)
-    for p in data['people']: #use os to get the filepath for the json file and make that a variable, replace data.txt with the json file path
-        print('Name: ' + p['name'])
-        print('Website: ' + p['website'])
-        print('From: ' + p['from'])
-        print('')
-
-gradebook_filepath = "path/to/gradebook.json"
-with open(gradebook_filepath, "r") as json_file:
-    file_contents = json_file.read()
-gradebook = json.loads(file_contents)
-print(type(gradebook)) #> <class 'dict'>
-print(gradebook)
-
-
 def test_to_usd():
     result = to_usd(82.9)
     assert result == "$82.90"
