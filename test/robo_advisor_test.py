@@ -15,15 +15,13 @@ import json
 
 load_dotenv()
 
-from app.robo_advisor import to_usd, recommendation_reason, get_response
+from app.robo_advisor import to_usd, recommendation_reason, get_response, writing_csv, line
 
 def test_to_usd():
     result = to_usd(82.9)
     assert result == "$82.90"
 
-
 def test_recommendation_reason():
-    stock_info = json.loads(prices_daily.json)
     result = recommendation_reason(float(10), float(5))
     assert result == "Don't buy, because the current price is greater than 90% of the recent highest price, so you should wait to buy the stock until the price decreases."
 
@@ -39,3 +37,36 @@ def test_get_response():
     assert parsed_response["Meta Data"]["2. Symbol"] == symbol
 #Source: Adapted from https://github.com/prof-rossetti/intro-to-python/blob/master/notes/devtools/travis-ci.md
 
+def test_line():
+    result = line("-")
+    assert result == "--------------------------------------------------"
+
+def test_writing_csv():
+    csv_filepath = os.path.join(os.path.dirname(__file__), "example_data", "sample_prices_daily.csv")
+
+    if os.path.isfile(csv_filepath):
+        os.remove(csv_filepath)
+
+    result = writing_csv(csv_filepath)
+
+    assert result == True
+    assert os.path.isfile(csv_filepath) == True
+    
+
+
+
+
+#with open('data.txt') as json_file:
+#    data = json.load(json_file)
+#    for p in data['people']: #use os to get the filepath for the json file and make that a variable, replace data.txt with the json file path
+#        print('Name: ' + p['name'])
+#        print('Website: ' + p['website'])
+#        print('From: ' + p['from'])
+#        print('')
+#
+#sample_data_filepath = "test/example_data/prices_daily.json"
+#with open(gradebook_filepath, "r") as json_file:
+#    file_contents = json_file.read()
+#gradebook = json.loads(file_contents)
+#print(type(gradebook)) #> <class 'dict'>
+#print(gradebook)

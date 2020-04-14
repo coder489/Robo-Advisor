@@ -2,11 +2,18 @@
     "Meta Data": {
         "1. Information": "Daily Prices (open, high, low, close) and Volumes",
         "2. Symbol": "tsla",
-        "3. Last Refreshed": "2020-04-09",
+        "3. Last Refreshed": "2020-04-13",
         "4. Output Size": "Compact",
         "5. Time Zone": "US/Eastern"
     },
     "Time Series (Daily)": {
+        "2020-04-13": {
+            "1. open": "590.1600",
+            "2. high": "652.0000",
+            "3. low": "580.5300",
+            "4. close": "650.9500",
+            "5. volume": "21645267"
+        },
         "2020-04-09": {
             "1. open": "562.0900",
             "2. high": "575.1818",
@@ -69,13 +76,6 @@
             "3. low": "491.2300",
             "4. close": "502.1300",
             "5. volume": "11998067"
-        },
-        "2020-03-27": {
-            "1. open": "505.0000",
-            "2. high": "525.8000",
-            "3. low": "494.0300",
-            "4. close": "514.3600",
-            "5. volume": "14377408"
         }
     }
 }

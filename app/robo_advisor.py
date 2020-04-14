@@ -31,11 +31,11 @@ def current_time():
     time_now = time.strftime("%I:%M %p", t) 
     return time_now
 
-def line():
+def line(symbol):
     """
-    Used to print the line when giving information to the user.
+        Used to print the line for the receipt.
     """
-    print("---------------------------------")
+    return symbol * 50
 
 def get_response(stock_symbol, api):
     """
@@ -62,19 +62,19 @@ def recommendation_reason(latest_close, recent_high):
         recommendation = "Don't buy, because the current price is greater than 90% of the recent highest price, so you should wait to buy the stock until the price decreases."
     return recommendation
 
-def write_to_csv(csv_filepath):
-"""
-Used to write the gathered data to a specified csv file.
+def writing_csv(csv_filepath):
+    """
+    Used to write the gathered data to a specified csv file.
 
-Source: Adapted from Prof Rosetti's screen cast of Robo Advisor
-"""
+    Source: Adapted from Prof Rosetti's screen cast of Robo Advisor
+    """
     csv_headers = ["timestamp", "open", "high", "low", "close", "volume"]
 
     with open(csv_filepath, "w") as csv_file:
         writer = csv.DictWriter(csv_file, fieldnames=csv_headers)
         writer.writeheader() 
         for date in dates:
-            daily_prices = tsd[date]
+            daily_prices = tsd[date] #have to get rid of the for date in dates
             writer.writerow({
                 "timestamp": date,
                 "open": daily_prices["1. open"],
@@ -138,7 +138,7 @@ if __name__ == "__main__":
 
     csv_file_path = os.path.join(os.path.dirname(__file__), "..", "data", "prices.csv")
 
-    write_to_csv(os.path.join(os.path.dirname(__file__), "..", "data", "prices.csv"))
+    writing_csv(os.path.join(os.path.dirname(__file__), "..", "data", "prices.csv"))
 
    
     ## INFORMATION GIVEN IMMEDIATELY TO USER
