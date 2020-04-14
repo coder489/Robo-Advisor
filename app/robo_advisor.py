@@ -16,6 +16,7 @@ load_dotenv()
 def to_usd(my_price):
     """
         Used to format the price in traditional US format. 
+        
         Source: https://github.com/prof-rossetti/intro-to-python/blob/master/notes/python/datatypes/numbers.md#formatting-as-currency
     """
     return f"${my_price:,.2f}" 
@@ -23,22 +24,24 @@ def to_usd(my_price):
 def current_time():
     """
         Used to get the current time, format it, and then return it.
+        
         Source: https://www.programiz.com/python-programming/datetime/current-datetime
     """
     t = time.localtime()                
     time_now = time.strftime("%I:%M %p", t) 
     return time_now
 
-def line():
+def line(symbol):
     """
-    Used to print the line when giving information to the user.
+        Used to print the line for the receipt.
     """
-    print("---------------------------------")
+    return symbol * 50
 
 def get_response(stock_symbol, api):
     """
     Used to collect the data from the url.
-    Source: https://github.com/prof-rossetti/intro-to-python/blob/master/notes/devtools/travis-ci.md
+    
+    Source: Adapted from https://github.com/prof-rossetti/intro-to-python/blob/master/notes/devtools/travis-ci.md
     """
     url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={stock_symbol}&apikey={api}"
     response = requests.get(url) # issues an HTTP request
@@ -58,6 +61,29 @@ def recommendation_reason(latest_close, recent_high):
     else:
         recommendation = "Don't buy, because the current price is greater than 90% of the recent highest price, so you should wait to buy the stock until the price decreases."
     return recommendation
+
+def writing_csv(csv_filepath, all_dates, stock_price_data): 
+    """
+    Used to write the gathered data to a specified csv file.
+
+    Source: Adapted from Prof Rosetti's screen cast of Robo Advisor
+    """
+    csv_headers = ["timestamp", "open", "high", "low", "close", "volume"]
+
+    with open(csv_filepath, "w") as csv_file:
+        writer = csv.DictWriter(csv_file, fieldnames=csv_headers)
+        writer.writeheader() 
+        for date in all_dates:
+            daily_prices = stock_price_data[date] 
+            writer.writerow({
+                "timestamp": date,
+                "open": daily_prices["1. open"],
+                "high": daily_prices["2. high"],
+                "low": daily_prices["3. low"],
+                "close": daily_prices["4. close"],
+                "volume": daily_prices["5. volume"]
+            })
+    return True
 
 if __name__ == "__main__":
     
@@ -82,7 +108,7 @@ if __name__ == "__main__":
 
    
     # COLLECT THE LATEST DAY AND LATEST CLOSING PRICE
-
+    
     last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
 
     tsd = parsed_response["Time Series (Daily)"]
@@ -108,49 +134,35 @@ if __name__ == "__main__":
 
     ### INFORMATION OUTPUTS ###
 
-    # WRITE DATE TO CSV FILE
+    # WRITE DATA TO CSV FILE
 
     csv_file_path = os.path.join(os.path.dirname(__file__), "..", "data", "prices.csv")
-    csv_headers = ["timestamp", "open", "high", "low", "close", "volume"]
 
-    with open(csv_file_path, "w") as csv_file: # "w" means "open the file for writing"
-        writer = csv.DictWriter(csv_file, fieldnames = csv_headers)
-        writer.writeheader() 
-        for date in dates:
-            daily_prices = tsd[date]        
-            writer.writerow({
-                "timestamp": date,
-                "open": daily_prices["1. open"],
-                "high": daily_prices["2. high"],
-                "low": daily_prices["3. low"],
-                "close": daily_prices["4. close"],
-                "volume": daily_prices["5. volume"]
-            })
-    
+    writing_csv(csv_file_path, dates, tsd)
 
+   
     ## INFORMATION GIVEN IMMEDIATELY TO USER
 
-    line()
+    print(line("-"))
     print(f"SELECTED SYMBOL: {symbol.upper()}") 
-    line()
+    print(line("-"))
     print("REQUESTING STOCK MARKET DATA...")
     print(f"REQUEST AT: {str(datetime.date.today())} {current_time()}")
-    line()
+    print(line("-"))
     print(f"LATEST DAY: {last_refreshed}")
     print(f"LATEST CLOSE: {to_usd(float(latest_close))}")
     print(f"RECENT HIGH: {to_usd(float(recent_high))}")
     print(f"RECENT LOW: {to_usd(float(recent_low))}")
-    line()
+    print(line("-"))
     print(f"RECOMMENDATION: {recommendation_reason(float(latest_close), float(recent_high))}") 
-    line()
+    print(line("-"))
     print("Writing Data to CSV...")
     print(f"You may now access the CSV via this file path: {csv_file_path}")
-    line()
+    print(line("-"))
     print("A visualization of the stock close prices over time can be seen in your browser.")
-    line()
+    print(line("-"))
     print("HAPPY INVESTING!")
-    line()
-
+    print(line("-"))
 
     ## VISUALIZATION OUTPUT
 
