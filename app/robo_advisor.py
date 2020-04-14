@@ -62,7 +62,7 @@ def recommendation_reason(latest_close, recent_high):
         recommendation = "Don't buy, because the current price is greater than 90% of the recent highest price, so you should wait to buy the stock until the price decreases."
     return recommendation
 
-def writing_csv(csv_filepath):
+def writing_csv(csv_filepath, all_dates, stock_price_data): 
     """
     Used to write the gathered data to a specified csv file.
 
@@ -73,8 +73,8 @@ def writing_csv(csv_filepath):
     with open(csv_filepath, "w") as csv_file:
         writer = csv.DictWriter(csv_file, fieldnames=csv_headers)
         writer.writeheader() 
-        for date in dates:
-            daily_prices = tsd[date] #have to get rid of the for date in dates
+        for date in all_dates:
+            daily_prices = stock_price_data[date] 
             writer.writerow({
                 "timestamp": date,
                 "open": daily_prices["1. open"],
@@ -138,32 +138,31 @@ if __name__ == "__main__":
 
     csv_file_path = os.path.join(os.path.dirname(__file__), "..", "data", "prices.csv")
 
-    writing_csv(os.path.join(os.path.dirname(__file__), "..", "data", "prices.csv"))
+    writing_csv(csv_file_path, dates, tsd)
 
    
     ## INFORMATION GIVEN IMMEDIATELY TO USER
 
-    line()
+    print(line("-"))
     print(f"SELECTED SYMBOL: {symbol.upper()}") 
-    line()
+    print(line("-"))
     print("REQUESTING STOCK MARKET DATA...")
     print(f"REQUEST AT: {str(datetime.date.today())} {current_time()}")
-    line()
+    print(line("-"))
     print(f"LATEST DAY: {last_refreshed}")
     print(f"LATEST CLOSE: {to_usd(float(latest_close))}")
     print(f"RECENT HIGH: {to_usd(float(recent_high))}")
     print(f"RECENT LOW: {to_usd(float(recent_low))}")
-    line()
+    print(line("-"))
     print(f"RECOMMENDATION: {recommendation_reason(float(latest_close), float(recent_high))}") 
-    line()
+    print(line("-"))
     print("Writing Data to CSV...")
     print(f"You may now access the CSV via this file path: {csv_file_path}")
-    line()
+    print(line("-"))
     print("A visualization of the stock close prices over time can be seen in your browser.")
-    line()
+    print(line("-"))
     print("HAPPY INVESTING!")
-    line()
-
+    print(line("-"))
 
     ## VISUALIZATION OUTPUT
 
