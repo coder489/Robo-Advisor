@@ -15,17 +15,21 @@ load_dotenv()
 
 def to_usd(my_price):
     """
-        Used to format the price in traditional US format. 
+    Converts a numeric value to usd-formatted string, for printing and display purposes.
+    
+    Parameters: 
+    
+        my_price (int or float): a price value that is not formatted like 4000.444444
         
-        Source: https://github.com/prof-rossetti/intro-to-python/blob/master/notes/python/datatypes/numbers.md#formatting-as-currency
+    Source: https://github.com/prof-rossetti/intro-to-python/blob/master/notes/python/datatypes/numbers.md#formatting-as-currency
     """
     return f"${my_price:,.2f}" 
 
 def current_time():
     """
-        Used to get the current time, format it, and then return it.
+    Used to get the current time, format it, and then return it.
         
-        Source: https://www.programiz.com/python-programming/datetime/current-datetime
+    Source: https://www.programiz.com/python-programming/datetime/current-datetime
     """
     t = time.localtime()                
     time_now = time.strftime("%I:%M %p", t) 
@@ -33,14 +37,25 @@ def current_time():
 
 def line(symbol):
     """
-        Used to print the line for the receipt.
+    Creates a divider out of a specified symbol.
+    
+    Parameters: 
+    
+        symbol (str): any symbol that you wish to use repeatedly to form a divider, like "*" or "-"
+
     """
     return symbol * 50
 
 def get_response(stock_symbol, api):
     """
-    Used to collect the data from the url.
+    Gets prices of stock from a specified url from alphavantage, validates that the company ticker requested exists, and then returns the requested information as json.loads.
     
+    Parameters: 
+    
+        stock_symbol (str): must be 4 characters or less, and only contains letters, like "msft"
+    
+        api (str): an API key that can be obtained through alphavantage)
+
     Source: Adapted from https://github.com/prof-rossetti/intro-to-python/blob/master/notes/devtools/travis-ci.md
     """
     url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={stock_symbol}&apikey={api}"
@@ -54,7 +69,14 @@ def get_response(stock_symbol, api):
 
 def recommendation_reason(latest_close, recent_high):
     """
-    Used to print the recommendation to the user based on the stock price.
+    Prints a recommendation in regards to buying stock based on the most recent high and low stock prices.
+
+    Parameters: 
+    
+        latest_close (float or int): a price value, like 456.9980 or 456 
+    
+        recent_high (float or int): a price value, like 45.6868 or 45
+
     """
     if float(latest_close) < float(0.9) * float(recent_high):
         recommendation = "Buy, because the current price is less than 90% of the recent highest price, thus the stock is possibly undervalued and you can buy it low then sell it when the price increases again"
@@ -64,7 +86,15 @@ def recommendation_reason(latest_close, recent_high):
 
 def writing_csv(csv_filepath, all_dates, stock_price_data): 
     """
-    Used to write the gathered data to a specified csv file.
+    Gathers data given, loops through that data, and collects requested information, then writes the information to a csv file at the specified file path.
+
+    Parameters: 
+    
+        csv_filepath (str): desired filepath for the csv file
+    
+        all_dates (list): a list of first element of each dictionary in looped through dictionary of dictionaries
+    
+        stock_price_data (dict): dictionary of dictionaries, each dict has key value pairs unique to a certain date
 
     Source: Adapted from Prof Rosetti's screen cast of Robo Advisor
     """
